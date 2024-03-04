@@ -1,0 +1,41 @@
+<!DOCTYPE HTML>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Impactful Weather Dashboard</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div id="main">
+        <h1 width="1300" height="40"
+            class="title">
+            Impactful Weather Dashboard
+        </h1>
+        <svg width="1380" height="760" style="border: 1px solid #777;">
+            <g class="sections select-country">
+                <rect width="190" height="300" 
+                style="border: 1px solid #777;"></rect>
+                <text class="select-title">Select Country:</text>
+            </g>
+            <g class="sections percipitation">
+                <rect width="1130" height="300" 
+                style="border: 1px solid #777;"></rect>
+            </g>
+            <g class="sections record-high">
+                <rect width="660" height="280" 
+                style="border: 1px solid #777;"></rect>
+            </g>
+            <g class="sections record-low">
+                <rect width="660" height="280" 
+                style="border: 1px solid #777;"></rect>
+            </g>
+            <g class="sections fast-facts">
+                <rect width="1340" height="100" 
+                style="border: 1px solid #777;"></rect>
+            </g>
+        </svg>
+    </div>
+</body>
+<script src="https://d3js.org/d3.v5.min.js"></script>
+<script src="./impact_weather.js"></script>
+</html>
