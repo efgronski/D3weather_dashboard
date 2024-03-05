@@ -3,37 +3,71 @@
 <head>
     <meta charset="UTF-8">
     <title>Impactful Weather Dashboard</title>
-    <link rel="stylesheet" href="style.css">
+    <link href=./css/style.css rel=stylesheet>
 </head>
 <body>
-    <div id="main">
-        <h1 width="1300" height="40"
+    <h1 width="1300" height="40"
             class="title">
-            Impactful Weather Dashboard
-        </h1>
-        <svg width="1380" height="760" style="border: 1px solid #777;">
-            <g class="sections select-country">
-                <rect width="190" height="300" 
-                style="border: 1px solid #777;"></rect>
-                <text class="select-title">Select Country:</text>
-            </g>
-            <g class="sections percipitation">
-                <rect width="1130" height="300" 
-                style="border: 1px solid #777;"></rect>
-            </g>
-            <g class="sections record-high">
-                <rect width="660" height="280" 
-                style="border: 1px solid #777;"></rect>
-            </g>
-            <g class="sections record-low">
-                <rect width="660" height="280" 
-                style="border: 1px solid #777;"></rect>
-            </g>
-            <g class="sections fast-facts">
-                <rect width="1340" height="100" 
-                style="border: 1px solid #777;"></rect>
-            </g>
-        </svg>
+            🌧️ Impactful Weather Dashboard ☀️
+    </h1>
+    <div id="main">
+        <!-- The checkbox form and first visualization -->
+        <div id="first-layer">
+            <form>
+                <fieldset>
+                <legend>Select City:</legend>
+                <div>
+                    <label for="CLT"><input type="checkbox" id="CLT" name="source" value="CLT" onchange="checkboxChange(value)"> Charlotte, North Carolina</label>
+                </div>
+                <div>
+                    <label for="CQT"><input type="checkbox" id="CQT" name="source" value="CQT" onchange="checkboxChange(value)"> Los Angeles, California</label>
+                </div>
+                <div>
+                    <label for="IND"><input type="checkbox" id="IND" name="source" value="IND" onchange="checkboxChange(value)"> Indianapolis, Indiana</label>
+                </div>
+                <div>
+                    <label for="JAX"><input type="checkbox" id="JAX" name="source" value="JAX" onchange="checkboxChange(value)"> Jacksonville, Florida</label>
+                </div>
+                <div>
+                    <label for="MDW"><input type="checkbox" id="MDW" name="source" value="MDW" onchange="checkboxChange(value)"> Chicago, Illinois</label>
+                </div>
+                <div>
+                    <label for="PHL"><input type="checkbox" id="PHL" name="source" value="PHL" onchange="checkboxChange(value)"> Philadelphia, Pennsylvania</label>
+                </div>
+                <div>
+                    <label for="PHX"><input type="checkbox" id="PHX" name="source" value="PHX" onchange="checkboxChange(value)"> Phoenix, Arizona</label>
+                </div>
+                </fieldset>
+            </form>
+            <svg class="sections percipitation" width="1130" height="300">
+                <g>
+                    <rect width="1130" height="300" 
+                    style="border: 1px solid #777;"></rect>
+                </g>
+            </svg>
+        </div>
+        <!-- The bottom 3 visualizations -->
+        <div id="second-layer">
+            <svg class="sections record-high" width="660" height="280">
+                <g>
+                    <rect width="660" height="280" 
+                    style="border: 1px solid #777;"></rect>
+                </g>
+            </svg>
+            <svg class="sections record-low" width="660" height="280">
+                <g>
+                    <rect width="660" height="280" 
+                    style="border: 1px solid #777;"></rect>
+                </g>
+            </svg>
+            <svg class="sections fast-facts" width="1340" height="100">
+                <g>
+                    <rect width="1340" height="100" 
+                    style="border: 1px solid #777;"></rect>
+                </g>
+            </svg>
+        </div>
+        
     </div>
 </body>
 <script src="https://d3js.org/d3.v5.min.js"></script>

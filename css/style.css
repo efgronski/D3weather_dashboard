@@ -1,0 +1,63 @@
+/* styling from lab 4 */
+.line-plot {
+    fill: none;
+    stroke-width: 1.5px;
+    stroke: #333;
+}
+
+.axis-label {
+    text-anchor: middle;
+    font-size: 12px;
+    font-weight: semibold;
+}
+
+.grid path,
+.grid line {
+    stroke: #fff;
+}
+
+/* my styling */
+body {
+    font-family: sans-serif;
+    margin: 10px;
+}
+
+.background {
+    fill: #eee;
+}
+
+.sections rect {
+    fill: #d3d3d3;
+}
+
+h1 {
+    margin-left: 20px;
+}
+
+div#main {
+    display: inline;
+}
+
+#first-layer {
+    display: flex;
+    margin-top: 20px;
+    margin-right: 20px;
+    margin-left: 20px;
+}
+
+#second-layer {
+    margin-right: 20px;
+    margin-left: 20px;
+    display: flexbox;
+}
+
+#first-layer form {
+    width: 190px;
+    height: 300px;
+    margin-right: 20px;
+}
+
+#second-layer .record-high, #second-layer .fast-facts {
+    margin-right: 20px;
+    margin-top: 20px;
+}

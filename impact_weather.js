@@ -1,63 +1,62 @@
 // impactful weather dashboard code
 
-// establish variables
-var svg = d3.select('svg');
+let selectedList = []
 
-//layout sections of dashboard
-svg.select('.title')
-    .attr('transform', function(d, i) {
-        return 'translate('+[20, 20]+')';
-    })
-    .attr('font-size', '40px');
+var checkboxChange = function(value){
 
-svg.select('.select-country')
-    .attr('transform', function(d, i) {
-        return 'translate('+[20, 20]+')';
-    });
+    if(selectedList.includes(value) == true){
+        let filteredList = selectedList.filter(function (city) {
+            return city !== value;
+        });
+        selectedList = filteredList
+    } else {
+        selectedList.push(value)
+    }
 
-svg.select('.percipitation')
-    .attr('transform', function(d, i) {
-        return 'translate('+[230, 20]+')';
-    });
-
-svg.select('.record-high')
-    .attr('transform', function(d, i) {
-        return 'translate('+[20, 360]+')';
-    });
-
-svg.select('.record-low')
-    .attr('transform', function(d, i) {
-        return 'translate('+[700, 360]+')';
-    });
-
-svg.select('.fast-facts')
-    .attr('transform', function(d, i) {
-        return 'translate('+[20, 660]+')';
-    });
-
-d3.selectAll('rect')
-    .attr('fill', '#d3d3d3')
-
-svg.select('.select-title')
-    .attr('transform', function(d, i) {
-        return 'translate('+[5, 20]+')';
-    })
-    .attr('font-size', '20px');
+    updateChart(selectedList)
+}
 
 // load data and compute graphs
 
+var citydata
+
 d3.csv('impact_weather.csv').then(function(dataset) {
 
-    // create nest of each city in dataset
-    var cityNest = d3.nest()
-        .key(function(c) {
-            return c.city_code;
-        })
-        .entries(dataset)
-
-    var countryForm = svg.select('g.select-country')
-
-    // countryForm.append('Inputs.checkbox(["red", "green", "blue"], {label: "color"})')
-
+    citydata = dataset
 
 });
+
+function updateChart(selectedList){
+
+    // filter the data based on the selections made by user
+    var filteredDataset
+
+    var map1 = selectedList.map((city) => citydata.filter((row) => row.city_code == city))
+    
+    if (map1.length == 0){
+        filteredDataset = []
+    } else if (map1.length == 1){
+        filteredDataset = map1[0]
+    } else if (map1.length == 2){
+        filteredDataset = map1[0].concat(map1[1])
+    } else if (map1.length == 3){
+        filteredDataset = map1[0].concat(map1[1], map1[2])
+    } else if (map1.length == 4){
+        filteredDataset = map1[0].concat(map1[1], map1[2], map1[3])
+    } else if (map1.length == 5){
+        filteredDataset = map1[0].concat(map1[1], map1[2], map1[3], map1[4])
+    } else if (map1.length == 6){
+        filteredDataset = map1[0].concat(map1[1], map1[2], map1[3], map1[4], map1[5])
+    } else {
+        filteredDataset = citydata
+    }
+
+    // create nest of each city in dataset
+    // var cityNest = d3.nest()
+    //     .key(function(c) {
+    //         return c.city_code;
+    //     })
+    //     .entries(filteredDataset)
+
+    // console.log(cityNest)
+}
