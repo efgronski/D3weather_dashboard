@@ -42,7 +42,8 @@ div#main {
     display: flex;
     margin-top: 20px;
     margin-right: 20px;
-    margin-left: 20px;
+    margin-left: 40px;
+    margin-bottom: 20px;
 }
 
 #second-layer {
@@ -58,6 +59,7 @@ div#main {
 }
 
 #second-layer .record-high, #second-layer .fast-facts {
-    margin-right: 20px;
+    /* margin-right: 20px; */
     margin-top: 20px;
 }
+
