@@ -17,13 +17,17 @@ var checkboxChange = function(value){
 }
 
 // global variables
-
+var precip
+var tempHigh
+var tempLow
 var citydata
 var precipG
 var highG
 var lowG
 var colorScale
 var lineInterpolate
+var defaultCityNest
+var cities = ['CLT', 'CQT', 'IND', 'JAX', 'MDW', 'PHL', 'PHX']
 
 // load data and compute graphs
 
@@ -35,11 +39,11 @@ d3.csv('impact_weather.csv').then(function(dataset) {
 
     var dateDomain = [new Date(2014, 7, 1), new Date(2015, 6, 30)];
 
-    var precip = citydata.map(x => x['actual_precipitation']);
+    precip = citydata.map(x => x['actual_precipitation']);
     var precipDomain = [Math.min(...precip), Math.max(...precip)];
     
-    var tempHigh = citydata.map(x => x['record_max_temp']);
-    var tempLow = citydata.map(x => x['record_min_temp']);
+    tempHigh = citydata.map(x => x['record_max_temp']);
+    tempLow = citydata.map(x => x['record_min_temp']);
     var tempHighDomain = [Math.min(...tempHigh), Math.max(...tempHigh)];
     var tempLowDomain = [Math.min(...tempLow), Math.max(...tempLow)];
 
@@ -91,9 +95,9 @@ d3.csv('impact_weather.csv').then(function(dataset) {
         .tickSize(-660, 0, 0)
         .tickFormat('');
 
-    precipG = d3.select('.precipitation');
-    highG = d3.select('.record-high');
-    lowG = d3.select('.record-low');
+    precipG = d3.select('g.precipitation');
+    highG = d3.select('g.record-high');
+    lowG = d3.select('g.record-low');
 
     // append grids for graphs
 
@@ -187,11 +191,11 @@ d3.csv('impact_weather.csv').then(function(dataset) {
 
     // others
 
-    lineInterpolate = d3.line()
-        .x(function(d) { return xScale(d.date); })
-        .y(function(d) { return yScale(d.price); });
+    var line = d3.line()
+        .x(function(d) { return xScaleFirst(d['date']); })
+        .y(function(d) { return yScaleFirst(d['actual_precipitation']); });
 
-    var defaultCityNest = d3.nest()
+    defaultCityNest = d3.nest()
         .key(function(c) {
             return c.city_code;
         })
@@ -199,6 +203,24 @@ d3.csv('impact_weather.csv').then(function(dataset) {
 
     colorScale = d3.scaleOrdinal(defaultCityNest.map((x) => x['key']), d3.schemeCategory10);
 
+    d3.select('.precipitationG').append('g')
+        .selectAll('line')
+        .data(defaultCityNest)
+        .enter()
+        .append('g')
+        .attr('class', 'lines')
+
+    precipG.selectAll('.lines')
+        .data(function(d){
+            console.log(d)
+            return [d.values];
+        })
+        .enter()
+        .append('path')
+            .attr('class', 'line-plot')
+            .attr('d', line)
+            .style('stroke', function(d) {return colorScale(cities[0])})
+            .style("stroke-width", "2");
 });
 
 function updateChart(selectedList){
@@ -233,11 +255,12 @@ function updateChart(selectedList){
         })
         .entries(filteredDataset);
 
-    precipG.selectAll('.precipitation')
-        .data(cityNest)
-        .enter()
-        .append('path')
-            .attr('class', 'line-plot')
-            .style('stroke', function(d) {return colorScale(cityNest[0].citycode)  })
-            .attr('d', lineInterpolate);
+    // precipG.selectAll('path')
+    //     .data(defaultCityNest)
+    //     .enter()
+    //     .append('path')
+    //         .attr('class', 'line-plot')
+    //         .style('stroke', function(d) {return colorScale(cityNest[0].city_code)  })
+    //         .attr('d', lineInterpolate);
+
 }
