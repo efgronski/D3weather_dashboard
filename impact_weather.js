@@ -17,6 +17,7 @@ var checkboxChange = function(value){
 }
 
 // global variables
+var parseDate = d3.timeParse('%Y-%b-%d');
 var precip
 var tempHigh
 var tempLow
@@ -26,7 +27,7 @@ var highG
 var lowG
 var colorScale
 var lineInterpolate
-var defaultCityNest
+var defaultPrecipNest
 var cities = ['CLT', 'CQT', 'IND', 'JAX', 'MDW', 'PHL', 'PHX']
 
 // load data and compute graphs
@@ -34,10 +35,13 @@ var cities = ['CLT', 'CQT', 'IND', 'JAX', 'MDW', 'PHL', 'PHX']
 d3.csv('impact_weather.csv').then(function(dataset) {
 
     // variables
+    for (d of dataset){
+        d.date = parseDate(d.date);
+    }
     
     citydata = dataset
 
-    var dateDomain = [new Date(2014, 7, 1), new Date(2015, 6, 30)];
+    var dateDomain = [new Date(2014, 6, 1), new Date(2015, 5, 30)];
 
     precip = citydata.map(x => x['actual_precipitation']);
     var precipDomain = [Math.min(...precip), Math.max(...precip)];
@@ -191,36 +195,44 @@ d3.csv('impact_weather.csv').then(function(dataset) {
 
     // others
 
-    var line = d3.line()
-        .x(function(d) { return xScaleFirst(d['date']); })
-        .y(function(d) { return yScaleFirst(d['actual_precipitation']); });
+    // var line = d3.line()
+    //     .x(function(d) { return xScaleFirst(d['date']); })
+    //     .y(function(d) { return yScaleFirst(d['actual_precipitation']); });
 
-    defaultCityNest = d3.nest()
+    const line = d3.line()
+        .x(function(d) { return xScaleFirst(d.date); })
+        .y(function(d) { return yScaleFirst(d.actual_precipitation); });
+
+    const precipData = citydata.map(el => {
+        return {
+            city_code: el.city_code,
+            date: el.date,
+            actual_precipitation: el.actual_precipitation
+            }  
+    })
+
+    defaultPrecipNest = d3.nest()
         .key(function(c) {
             return c.city_code;
         })
-        .entries(citydata);
+        .entries(precipData);
 
-    colorScale = d3.scaleOrdinal(defaultCityNest.map((x) => x['key']), d3.schemeCategory10);
 
-    d3.select('.precipitationG').append('g')
-        .selectAll('line')
-        .data(defaultCityNest)
+    colorScale = d3.scaleOrdinal(defaultPrecipNest.map((x) => x['key']), d3.schemeCategory10);
+
+    var lines = precipG.selectAll('lines')
+        .data(defaultPrecipNest)
         .enter()
         .append('g')
-        .attr('class', 'lines')
 
-    precipG.selectAll('.lines')
-        .data(function(d){
-            console.log(d)
-            return [d.values];
-        })
-        .enter()
-        .append('path')
+    lines.append('path')
             .attr('class', 'line-plot')
-            .attr('d', line)
+            .attr("d", function(d) { console.log(d); return line(d.values); })
             .style('stroke', function(d) {return colorScale(cities[0])})
             .style("stroke-width", "2");
+
+    
+
 });
 
 function updateChart(selectedList){
