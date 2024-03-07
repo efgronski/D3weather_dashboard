@@ -38,6 +38,34 @@ div#main {
     display: inline;
 }
 
+label[for^=CLT] {
+    color: rgb(31,119,180);
+}
+
+label[for^=CQT] {
+    color: rgb(255, 127, 14);
+}
+
+label[for^=IND] {
+    color: rgb(44, 160, 44);
+}
+
+label[for^=JAX] {
+    color: rgb(214, 39, 40);
+}
+
+label[for^=MDW] {
+    color: rgb(148, 103, 189);
+}
+
+label[for^=PHL] {
+    color: rgb(140, 86, 75);
+}
+
+label[for^=PHX] {
+    color: rgb(227, 119, 194);
+}
+
 #first-layer {
     display: flex;
     margin-top: 20px;
