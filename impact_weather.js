@@ -201,7 +201,7 @@ d3.csv('impact_weather.csv').then(function(dataset) {
     //     .y(function(d) { return yScaleFirst(d['actual_precipitation']); });
 
     line = d3.line()
-        .x(function(d) { console.log(d.date); return xScaleFirst(d.date); })
+        .x(function(d) { return xScaleFirst(d.date); })
         .y(function(d) { return yScaleFirst(d.actual_precipitation); });
 
     
@@ -273,15 +273,21 @@ function updateChart(selectedList){
         })
         .entries(filteredPrecipData);
 
-    var lines = precipG.selectAll('lines')
-        .data(filteredPrecipNest)
+    var lines = precipG.selectAll('.line')
+        .data(filteredPrecipNest, function(d){
+            return d.key
+        })
+
+    var linesG = lines
         .enter()
         .append('g')
+        .attr('class', 'line')
 
-    lines.append('path')
+    linesG.append('path')
             .attr('class', 'line-plot')
             .attr("d", function(d) { return line(d.values); })
             .style('stroke', function(d) {return colorScale(d.key)})
             .style("stroke-width", "2");
 
+    lines.exit().remove()
 }
