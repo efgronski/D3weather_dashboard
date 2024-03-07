@@ -29,7 +29,9 @@ var colorScale
 var lineInterpolate
 var defaultPrecipNest
 var cities = ['CLT', 'CQT', 'IND', 'JAX', 'MDW', 'PHL', 'PHX']
-var line
+var precipLineInterpolate
+var highLineInterpolate
+var lowLineInterpolate
 
 // load data and compute graphs
 
@@ -196,15 +198,22 @@ d3.csv('impact_weather.csv').then(function(dataset) {
 
     // others
 
-    // var line = d3.line()
-    //     .x(function(d) { return xScaleFirst(d['date']); })
-    //     .y(function(d) { return yScaleFirst(d['actual_precipitation']); });
+    // line interpolate functions
 
-    line = d3.line()
+    precipLineInterpolate = d3.line()
         .x(function(d) { return xScaleFirst(d.date); })
         .y(function(d) { return yScaleFirst(d.actual_precipitation); });
 
-    
+    highLineInterpolate = d3.line()
+        .x(function(d) { return xScaleSecond(d.date); })
+        .y(function(d) { return yScaleSecondHigh(d.record_max_temp); });
+
+    lowLineInterpolate = d3.line()
+        .x(function(d) { return xScaleSecond(d.date); })
+        .y(function(d) { return yScaleSecondLow(d.record_min_temp); });
+
+    // default data for testing
+
     var precipData = citydata.map(el => {
         return {
             city_code: el.city_code,
@@ -219,18 +228,9 @@ d3.csv('impact_weather.csv').then(function(dataset) {
         })
         .entries(precipData);
 
+    // color scale
+
     colorScale = d3.scaleOrdinal(defaultPrecipNest.map((x) => x['key']), d3.schemeCategory10);
-
-    // var lines = precipG.selectAll('lines')
-    //     .data(defaultPrecipNest)
-    //     .enter()
-    //     .append('g')
-
-    // lines.append('path')
-    //         .attr('class', 'line-plot')
-    //         .attr("d", function(d) { return line(d.values); })
-    //         .style('stroke', function(d) {return colorScale(d.key)})
-    //         .style("stroke-width", "2");
 
 });
 
@@ -259,6 +259,8 @@ function updateChart(selectedList){
         filteredDataset = citydata
     };
 
+    // precipitation line graph
+
     var filteredPrecipData = filteredDataset.map(el => {
         return {
             city_code: el.city_code,
@@ -273,21 +275,93 @@ function updateChart(selectedList){
         })
         .entries(filteredPrecipData);
 
-    var lines = precipG.selectAll('.line')
+    var precipLines = precipG.selectAll('.precip-line')
         .data(filteredPrecipNest, function(d){
             return d.key
         })
 
-    var linesG = lines
+    var precipLinesG = precipLines
         .enter()
         .append('g')
-        .attr('class', 'line')
+        .attr('class', 'precip-line')
 
-    linesG.append('path')
+    precipLinesG.append('path')
             .attr('class', 'line-plot')
-            .attr("d", function(d) { return line(d.values); })
+            .attr("d", function(d) { return precipLineInterpolate(d.values); })
+            .attr('transform', 'translate(' + [25, 0] + ')')
             .style('stroke', function(d) {return colorScale(d.key)})
             .style("stroke-width", "2");
 
-    lines.exit().remove()
+    precipLines.exit().remove()
+
+    // record high line graph
+
+    var filteredHighData = filteredDataset.map(el => {
+        return {
+            city_code: el.city_code,
+            date: el.date,
+            record_max_temp: el.record_max_temp
+            }  
+    })
+
+    var filteredHighNest = d3.nest()
+        .key(function(c) {
+            return c.city_code;
+        })
+        .entries(filteredHighData);
+
+    var highLines = highG.selectAll('.high-line')
+        .data(filteredHighNest, function(d){
+            return d.key
+        })
+
+    var highLinesG = highLines
+        .enter()
+        .append('g')
+        .attr('class', 'high-line')
+
+    highLinesG.append('path')
+        .attr('class', 'line-plot')
+        .attr("d", function(d) { return highLineInterpolate(d.values); })
+        .attr('transform', 'translate(' + [25, 11] + ')')
+        .style('stroke', function(d) {return colorScale(d.key)})
+        .style("stroke-width", "2");
+
+    highLines.exit().remove()
+
+    // record LOW line graph
+
+    var filteredLowData = filteredDataset.map(el => {
+        return {
+            city_code: el.city_code,
+            date: el.date,
+            record_min_temp: el.record_min_temp
+            }  
+    })
+
+    var filteredLowNest = d3.nest()
+        .key(function(c) {
+            return c.city_code;
+        })
+        .entries(filteredLowData);
+
+    var lowLines = lowG.selectAll('.low-line')
+        .data(filteredLowNest, function(d){
+            return d.key
+        })
+
+    var lowLinesG = lowLines
+        .enter()
+        .append('g')
+        .attr('class', 'low-line')
+
+    lowLinesG.append('path')
+        .attr('class', 'line-plot')
+        .attr("d", function(d) { return lowLineInterpolate(d.values); })
+        .attr('transform', 'translate(' + [25, 11] + ')')
+        .style('stroke', function(d) {return colorScale(d.key)})
+        .style("stroke-width", "2");
+
+    lowLines.exit().remove()
+    
 }
