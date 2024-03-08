@@ -1,9 +1,10 @@
 // impactful weather dashboard code
 
-var selectedList = []
+var selectedList = [] // list of selected cities
 
 var checkboxChange = function(value){
 
+    // handle checkbox being clicked
     if(selectedList.includes(value) == true){
         var filteredList = selectedList.filter(function (city) {
             return city !== value;
@@ -17,19 +18,18 @@ var checkboxChange = function(value){
 }
 
 // global variables
-var parseDate = d3.timeParse("%Y-%m-%d")
-var precip
+var parseDate = d3.timeParse("%Y-%m-%d") // handle date type
+var precip // filter data for each graph
 var tempHigh
 var tempLow
-var citydata
-var precipG
+var citydata // all data for city filtering
+var precipG // groups for each graph
 var highG
 var lowG
-var colorScale
-var lineInterpolate
-var defaultPrecipNest
-var cities = ['CLT', 'CQT', 'IND', 'JAX', 'MDW', 'PHL', 'PHX']
-var precipLineInterpolate
+var colorScale // add color scale
+var defaultPrecipNest // this is default data for testing
+var cities = ['CLT', 'CQT', 'IND', 'JAX', 'MDW', 'PHL', 'PHX'] // list of all cities
+var precipLineInterpolate // create lines for each graph
 var highLineInterpolate
 var lowLineInterpolate
 
@@ -166,9 +166,43 @@ d3.csv('impact_weather.csv').then(function(dataset) {
         return 'translate('+[25,10]+')'
     });
 
-    // d3.selectAll('.fast-facts').attr('transform', function(f){
-    //     return 'translate('+[10,10]+')'
-    // });
+    // reposition graphs in svgs to fit title
+    
+    precipG.attr('transform', function(f){
+        return 'translate('+[20,40]+')'
+    });
+
+    lowG.attr('transform', function(f){
+        return 'translate('+[20,30]+')'
+    });
+
+    highG.attr('transform', function(f){
+        return 'translate('+[20,30]+')'
+    });
+
+    d3.selectAll('.graph-title').attr('transform', function(f){
+        return 'translate('+[50,18]+')'
+    });
+
+    d3.selectAll('.graph-subtitle').attr('transform', function(f){
+        return 'translate('+[50,35]+')'
+    });
+    
+    d3.selectAll('.x-axis-label').attr('transform', function(f){
+        return 'translate('+[320,355]+')'
+    });
+
+    d3.select('.x-axis-label-p').attr('transform', function(f){
+        return 'translate('+[560,375]+')'
+    });
+
+    d3.selectAll('.y-axis-label').attr('transform', function(f){
+        return 'translate('+[18,227]+')rotate(270)'
+    });
+
+    d3.select('.y-axis-label-p').attr('transform', function(f){
+        return 'translate('+[18,237]+')rotate(270)'
+    });
 
     // axes for bottom two graphs
 
@@ -231,6 +265,11 @@ d3.csv('impact_weather.csv').then(function(dataset) {
     // color scale
 
     colorScale = d3.scaleOrdinal(defaultPrecipNest.map((x) => x['key']), d3.schemeCategory10);
+
+    // start screen when visualization is open
+    // all lines will disappear when use selects a city in checkbox
+    
+    updateChart(cities)
 
 });
 

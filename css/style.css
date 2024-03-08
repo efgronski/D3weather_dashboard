@@ -1,14 +1,7 @@
-/* styling from lab 4 */
 .line-plot {
     fill: none;
     stroke-width: 1.5px;
     stroke: #333;
-}
-
-.axis-label {
-    text-anchor: middle;
-    font-size: 12px;
-    font-weight: semibold;
 }
 
 .grid path,
@@ -16,14 +9,25 @@
     stroke: #fff;
 }
 
-/* my styling */
 body {
     font-family: sans-serif;
-    margin: 10px;
+}
+
+body::before {
+    content: "";
+    background-image: url("background-img4.jpg");
+    background-size: cover;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+    bottom: 0px;
+    left: 0px;
+    opacity: 0.4;
+    z-index:-1;
 }
 
 .background {
-    fill: #eee;
+    margin-top: 2px;
 }
 
 .sections rect {
@@ -31,7 +35,8 @@ body {
 }
 
 h1 {
-    margin-left: 20px;
+    margin-left: 0px;
+    text-align: center;
 }
 
 div#main {
@@ -68,10 +73,9 @@ label[for^=PHX] {
 
 #first-layer {
     display: flex;
-    margin-top: 20px;
+    margin-top: 10px;
     margin-right: 20px;
     margin-left: 40px;
-    margin-bottom: 20px;
 }
 
 #second-layer {
@@ -84,10 +88,35 @@ label[for^=PHX] {
     width: 190px;
     height: 300px;
     margin-right: 20px;
+    margin-top: 30px;
 }
 
-#second-layer .record-high, #second-layer .fast-facts {
-    /* margin-right: 20px; */
+fieldset {
+    background-color: #eee;
+}
+
+#second-layer .record-high {
     margin-top: 20px;
 }
 
+.graph-title {
+    font-size: larger;
+    font-weight: 500;
+    fill: #333;
+}
+
+.graph-subtitle {
+    font-size: smaller;
+    font-style: italic;
+    fill: darkslategray;
+}
+
+.x-axis-label, .x-axis-label-p {
+    font-size: x-small;
+    fill: darkslategray;
+}
+
+.y-axis-label, .y-axis-label-p {
+    font-size: x-small;
+    fill: darkslategray;
+}

@@ -4,70 +4,78 @@
     <meta charset="UTF-8">
     <title>Impactful Weather Dashboard</title>
     <link href=./css/style.css rel=stylesheet>
+    
 </head>
 <body>
-    <h1 width="1300" height="40"
+    <div class="background">
+        <h1 width="1300" height="40"
             class="title">
             🌧️ Impactful Weather Dashboard ☀️
-    </h1>
-    <div id="main">
-        <!-- The checkbox form and first visualization -->
-        <div id="first-layer">
-            <form>
-                <fieldset>
-                <legend>Select City:</legend>
-                <div>
-                    <label for="CLT"><input type="checkbox" id="CLT" name="source" value="CLT" onchange="checkboxChange(value)"> Charlotte,<br> &nbsp&nbsp &nbsp&nbsp North Carolina</label>
-                </div>
-                <div>
-                    <label for="CQT"><input type="checkbox" id="CQT" name="source" value="CQT" onchange="checkboxChange(value)"> Los Angeles,<br> &nbsp&nbsp &nbsp&nbsp California</label>
-                </div>
-                <div>
-                    <label for="IND"><input type="checkbox" id="IND" name="source" value="IND" onchange="checkboxChange(value)"> Indianapolis,<br> &nbsp&nbsp &nbsp&nbsp Indiana</label>
-                </div>
-                <div>
-                    <label for="JAX"><input type="checkbox" id="JAX" name="source" value="JAX" onchange="checkboxChange(value)"> Jacksonville,<br> &nbsp&nbsp &nbsp&nbsp Florida</label>
-                </div>
-                <div>
-                    <label for="MDW"><input type="checkbox" id="MDW" name="source" value="MDW" onchange="checkboxChange(value)"> Chicago,<br> &nbsp&nbsp &nbsp&nbsp Illinois</label>
-                </div>
-                <div>
-                    <label for="PHL"><input type="checkbox" id="PHL" name="source" value="PHL" onchange="checkboxChange(value)"> Philadelphia,<br> &nbsp&nbsp &nbsp&nbsp Pennsylvania</label>
-                </div>
-                <div>
-                    <label for="PHX"><input type="checkbox" id="PHX" name="source" value="PHX" onchange="checkboxChange(value)"> Phoenix,<br> &nbsp&nbsp &nbsp&nbsp Arizona</label>
-                </div>
-                </fieldset>
-            </form>
-            <svg class="sections precipitationG" width="1160" height="320">
-                <g class="precipitation">
-                    <rect width="1130" height="300" 
-                    style="border: 1px solid #777;"></rect>
-                </g>
-            </svg>
+        </h1>
+        <div id="main">
+            <!-- The checkbox form and first visualization -->
+            <div id="first-layer">
+                <form>
+                    <fieldset>
+                    <legend>Select City:</legend>
+                    <div>
+                        <label for="CLT"><input type="checkbox" id="CLT" name="source" value="CLT" onchange="checkboxChange(value)"> Charlotte,<br> &nbsp&nbsp &nbsp&nbsp North Carolina</label>
+                    </div>
+                    <div>
+                        <label for="CQT"><input type="checkbox" id="CQT" name="source" value="CQT" onchange="checkboxChange(value)"> Los Angeles,<br> &nbsp&nbsp &nbsp&nbsp California</label>
+                    </div>
+                    <div>
+                        <label for="IND"><input type="checkbox" id="IND" name="source" value="IND" onchange="checkboxChange(value)"> Indianapolis,<br> &nbsp&nbsp &nbsp&nbsp Indiana</label>
+                    </div>
+                    <div>
+                        <label for="JAX"><input type="checkbox" id="JAX" name="source" value="JAX" onchange="checkboxChange(value)"> Jacksonville,<br> &nbsp&nbsp &nbsp&nbsp Florida</label>
+                    </div>
+                    <div>
+                        <label for="MDW"><input type="checkbox" id="MDW" name="source" value="MDW" onchange="checkboxChange(value)"> Chicago,<br> &nbsp&nbsp &nbsp&nbsp Illinois</label>
+                    </div>
+                    <div>
+                        <label for="PHL"><input type="checkbox" id="PHL" name="source" value="PHL" onchange="checkboxChange(value)"> Philadelphia,<br> &nbsp&nbsp &nbsp&nbsp Pennsylvania</label>
+                    </div>
+                    <div>
+                        <label for="PHX"><input type="checkbox" id="PHX" name="source" value="PHX" onchange="checkboxChange(value)"> Phoenix,<br> &nbsp&nbsp &nbsp&nbsp Arizona</label>
+                    </div>
+                    </fieldset>
+                </form>
+                <svg class="sections precipitationG" width="1180" height="380">
+                    <text class="graph-title">Precipitation</text>
+                    <text class="graph-subtitle">The measured amount of rain or snow for that day</text>
+                    <g class="precipitation">
+                        <rect width="1130" height="300" 
+                        style="border: 1px solid #777;"></rect>
+                    </g>
+                    <text class="x-axis-label-p">Date (2014-2015)</text>
+                    <text class="y-axis-label-p">Precipitation (in.)</text>
+                </svg>
+            </div>
+            <!-- The bottom 3 visualizations -->
+            <div id="second-layer">
+                <svg class="sections record-highG" width="710" height="360">
+                    <text class="graph-title">Record High Temperatures</text>
+                    <text class="graph-subtitle">The highest ever temperature on that day since 1880</text>
+                    <g class="record-high">
+                        <rect width="660" height="280" 
+                        style="border: 1px solid #777;"></rect>
+                    </g>
+                    <text class="x-axis-label">Date (2014-2015)</text>
+                    <text class="y-axis-label">Temperature (F)</text>
+                </svg>
+                <svg class="sections record-lowG" width="710" height="360">
+                    <text class="graph-title">Record Low Temperatures</text>
+                    <text class="graph-subtitle">The lowest ever temperature on that day since 1880</text>
+                    <g class="record-low">
+                        <rect width="660" height="280" 
+                        style="border: 1px solid #777;"></rect>
+                    </g>
+                    <text class="x-axis-label">Date (2014-2015)</text>
+                    <text class="y-axis-label">Temperature (F)</text>
+                </svg>
+            </div>
         </div>
-        <!-- The bottom 3 visualizations -->
-        <div id="second-layer">
-            <svg class="sections record-highG" width="690" height="310">
-                <g class="record-high">
-                    <rect width="660" height="280" 
-                    style="border: 1px solid #777;"></rect>
-                </g>
-            </svg>
-            <svg class="sections record-lowG" width="690" height="310">
-                <g class="record-low">
-                    <rect width="660" height="280" 
-                    style="border: 1px solid #777;"></rect>
-                </g>
-            </svg>
-            <!-- <svg class="sections fast-facts" width="1390" height="120">
-                <g class="fast-facts">
-                    <rect width="1360" height="100" 
-                    style="border: 1px solid #777;"></rect>
-                </g>
-            </svg> -->
-        </div>
-        
     </div>
 </body>
 <script src="https://d3js.org/d3.v5.min.js"></script>
