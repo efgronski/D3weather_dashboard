@@ -10,19 +10,23 @@
 }
 
 body {
-    font-family: sans-serif;
+    font-family: Cambria, Cochin, Georgia, Times, 'Times New Roman', serif
+}
+
+text {
+    font-weight: 500;
 }
 
 body::before {
     content: "";
-    background-image: url("background-img4.jpg");
+    background-image: url("background-img3.webp");
     background-size: cover;
     position: absolute;
     top: 0px;
     right: 0px;
     bottom: 0px;
     left: 0px;
-    opacity: 0.4;
+    opacity: 0.5;
     z-index:-1;
 }
 
@@ -101,22 +105,25 @@ fieldset {
 
 .graph-title {
     font-size: larger;
-    font-weight: 500;
-    fill: #333;
+    font-weight: 600;
+    fill: black;
 }
 
 .graph-subtitle {
     font-size: smaller;
     font-style: italic;
-    fill: darkslategray;
+    fill: #333;
+    font-weight: 500;
 }
 
 .x-axis-label, .x-axis-label-p {
     font-size: x-small;
-    fill: darkslategray;
+    fill: #333;
+    font-weight: 600;
 }
 
 .y-axis-label, .y-axis-label-p {
     font-size: x-small;
-    fill: darkslategray;
+    fill: #333;
+    font-weight: 600;
 }
