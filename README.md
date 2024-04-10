@@ -5,6 +5,8 @@ Elizabeth Gronski
   
 07 March 2024
 
+[Published Dashboard](https://efgronski.github.io/D3weather_dashboard/)
+
 ## Project Background
 For this project, I wanted to bring a unique perspective to weather data that is not typically represented. I accomplished this objective by visualizing “impactful weather”. I am defining impactful weather as precipitation (rain and snow measurements) and record-breaking temperatures. Precipitation can be impactful due to rain/snow making transportation difficult, causing damage to homes and businesses, etc. Record-breaking temperatures can be impactful due to health risks. Freezing cold can be harmful to those in homes with no heat, those living in vehicles or with no shelter. Extreme heat is very harmful to elderly people, and also those with no shelter or A/C. If this project were to be adapted, it would be beneficial to have separate visuals for snow, ice, heat waves, etc. 
 
